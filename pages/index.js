@@ -48,17 +48,19 @@ export default function Home() {
 
 function Posts({ posts }) {
   return (
-    <ul className="bg-slate-100">
+    <ul className="grid gap-[1px]">
       {posts.map((post) => {
         const { key, name, message } = post;
         return (
-          <li key={key} className="mb-2 flex border-b border-b-slate-200">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-400 text-xl">
-              {name?.[0]}
+          <li key={key} className="flex flex-col bg-slate-200 p-6">
+            <div className="text-3xl">
+              <span className="text-gradient">{message}</span>
             </div>
-            <div>
-              <span>{name}</span>
-              <span>{message}</span>
+            <div className="mt-4 flex items-center">
+              <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-slate-400 text-xl">
+                {name?.[0]}
+              </div>
+              <div class="ml-2 text-sm text-slate-500">{name}</div>
             </div>
           </li>
         );
