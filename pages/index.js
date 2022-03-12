@@ -52,8 +52,8 @@ function Posts({ posts }) {
       {posts.map((post) => {
         const { key, name, message } = post;
         return (
-          <li key={key} className="flex mb-2 border-b border-b-slate-200">
-            <div className="rounded-2xl text-xl bg-slate-400 w-10 h-10 flex justify-center items-center">
+          <li key={key} className="mb-2 flex border-b border-b-slate-200">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-400 text-xl">
               {name?.[0]}
             </div>
             <div>
