@@ -2,9 +2,11 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { initFirebase } from '../lib/firebaseHelper.js';
 import TimeAgo from 'javascript-time-ago';
+import stringToIconClassName from '../lib/stringToIconClassName';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [newPostClass, setNewPostClass] = useState('opacity-0');
 
   useEffect(() => {
     initFirebase();
@@ -33,15 +35,36 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      left: 0,
-      behavior: 'smooth',
-    });
+    if (
+      window.scrollY + window.innerHeight <
+      document.body.scrollHeight - window.innerHeight / 2
+    ) {
+      // skip auto scroll to the bottom if user scroll back half screen
+      setNewPostClass('opacity-1');
+    } else {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
   }, [posts]);
+
+  useEffect(() => {
+    if (newPostClass.indexOf('opacity-1') !== -1) {
+      setTimeout(() => {
+        setNewPostClass('opacity-0');
+      }, 3000);
+    }
+  }, [newPostClass]);
 
   return (
     <div className="container mx-auto">
+      <div
+        className={`${newPostClass} fixed bottom-0 left-0 right-0 bg-blue-400 text-center leading-loose text-white transition-all duration-500`}
+      >
+        新訊息
+      </div>
       <Posts posts={posts} />
     </div>
   );
@@ -55,11 +78,13 @@ function Posts({ posts }) {
         const { key, name, message, createdAt } = post;
         return (
           <li key={key} className="flex flex-col bg-slate-100 p-6">
-            <div className="text-3xl">
-              <span className="text-gradient">{message}</span>
-            </div>
+            <div className="break-all text-3xl">{message}</div>
             <div className="mt-2 flex items-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-400 text-xl">
+              <div
+                className={`${stringToIconClassName(
+                  name
+                )} flex h-10 w-10 items-center justify-center rounded-2xl text-xl`}
+              >
                 {name?.[0]}
               </div>
               <div className="ml-2 text-slate-800">{name}</div>
