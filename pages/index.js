@@ -1,6 +1,7 @@
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { initFirebase } from '../lib/firebaseHelper.js';
+import TimeAgo from 'javascript-time-ago';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -47,20 +48,25 @@ export default function Home() {
 }
 
 function Posts({ posts }) {
+  const timeAgo = new TimeAgo('zh-Hant');
   return (
     <ul className="grid gap-[1px]">
       {posts.map((post) => {
-        const { key, name, message } = post;
+        const { key, name, message, createdAt } = post;
         return (
-          <li key={key} className="flex flex-col bg-slate-200 p-6">
+          <li key={key} className="flex flex-col bg-slate-100 p-6">
             <div className="text-3xl">
               <span className="text-gradient">{message}</span>
             </div>
-            <div className="mt-4 flex items-center">
-              <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-slate-400 text-xl">
+            <div className="mt-2 flex items-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-400 text-xl">
                 {name?.[0]}
               </div>
-              <div class="ml-2 text-sm text-slate-500">{name}</div>
+              <div className="ml-2 text-slate-800">{name}</div>
+              <div className="mx-2 text-slate-500">-</div>
+              <div className="text-sm text-slate-500">
+                {timeAgo.format(createdAt)}
+              </div>
             </div>
           </li>
         );
