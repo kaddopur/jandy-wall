@@ -1,20 +1,9 @@
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  push,
-  get,
-  query,
-  orderByChild,
-} from 'firebase/database';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import { useEffect, useCallback, useState } from 'react';
 import { initFirebase } from '../lib/firebaseHelper.js';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     initFirebase();
@@ -42,45 +31,38 @@ export default function Home() {
     );
   }, []);
 
-  const writePostData = useCallback((name, message) => {
-    console.log(
-      '🚀 ~ file: index.js ~ line 30 ~ writePostData ~ message',
-      message
-    );
-    const db = getDatabase();
-    const postListRef = ref(db, 'posts');
-    const newPostRef = push(postListRef);
-    set(newPostRef, {
-      name,
-      message,
-      createdAt: new Date().getTime(),
+  useEffect(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: 'smooth',
     });
-  }, []);
+  }, [posts]);
 
   return (
-    <>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          writePostData(name, message);
-        }}
-      >
-        Name: <input value={name} onChange={(e) => setName(e.target.value)} />
-        Message:
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
-        <input type="submit" />
-      </form>
-      <ul>
-        {posts.map((post) => {
-          const { key, name, message } = post;
-          return (
-            <li key={key}>
-              {name}: {message}
-            </li>
-          );
-        })}
-      </ul>
-    </>
+    <div className="container mx-auto">
+      <Posts posts={posts} />
+    </div>
+  );
+}
+
+function Posts({ posts }) {
+  return (
+    <ul className="bg-slate-100">
+      {posts.map((post) => {
+        const { key, name, message } = post;
+        return (
+          <li key={key} className="flex mb-2 border-b border-b-slate-200">
+            <div className="rounded-2xl text-xl bg-slate-400 w-10 h-10 flex justify-center items-center">
+              {name?.[0]}
+            </div>
+            <div>
+              <span>{name}</span>
+              <span>{message}</span>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
