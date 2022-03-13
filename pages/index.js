@@ -1,5 +1,5 @@
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { initFirebase } from '../lib/firebaseHelper.js';
 import TimeAgo from 'javascript-time-ago';
 import stringToIconClassName from '../lib/stringToIconClassName';
@@ -7,6 +7,14 @@ import stringToIconClassName from '../lib/stringToIconClassName';
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [newPostClass, setNewPostClass] = useState('opacity-0');
+
+  const scrollToBottom = useCallback((isSmooth = true) => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: isSmooth ? 'smooth' : 'instant',
+    });
+  });
 
   useEffect(() => {
     initFirebase();
@@ -27,6 +35,7 @@ export default function Home() {
         });
 
         setPosts(newPosts);
+        scrollToBottom(false);
       },
       {
         onlyOnce: false,
@@ -42,11 +51,7 @@ export default function Home() {
       // skip auto scroll to the bottom if user scroll back half screen
       setNewPostClass('opacity-1');
     } else {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        left: 0,
-        behavior: 'smooth',
-      });
+      scrollToBottom();
     }
   }, [posts]);
 
@@ -60,11 +65,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
-      <div
-        className={`${newPostClass} fixed bottom-0 left-0 right-0 bg-blue-400 text-center leading-loose text-white transition-all duration-500`}
+      <button
+        className={`${newPostClass} fixed bottom-0 left-0 right-0 bg-blue-400 py-3 text-center leading-loose text-white transition-all duration-500`}
+        onClick={scrollToBottom}
       >
         新訊息
-      </div>
+      </button>
       <Posts posts={posts} />
     </div>
   );
