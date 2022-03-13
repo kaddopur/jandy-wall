@@ -1,6 +1,7 @@
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { useEffect, useState, useCallback } from 'react';
+import { getDatabase, onValue, ref } from 'firebase/database';
 import { initFirebase } from '../lib/firebaseHelper.js';
+import { useCallback, useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
 import TimeAgo from 'javascript-time-ago';
 import stringToIconClassName from '../lib/stringToIconClassName';
 
@@ -14,7 +15,8 @@ export default function Home() {
       left: 0,
       behavior: isSmooth ? 'smooth' : 'instant',
     });
-  });
+    setNewPostClass('opacity-0');
+  }, []);
 
   useEffect(() => {
     initFirebase();
@@ -41,7 +43,7 @@ export default function Home() {
         onlyOnce: false,
       }
     );
-  }, []);
+  }, [scrollToBottom]);
 
   useEffect(() => {
     if (
@@ -53,7 +55,7 @@ export default function Home() {
     } else {
       scrollToBottom();
     }
-  }, [posts]);
+  }, [posts, scrollToBottom]);
 
   useEffect(() => {
     if (newPostClass.indexOf('opacity-1') !== -1) {
@@ -65,6 +67,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
+      <NavBar />
       <button
         className={`${newPostClass} fixed bottom-0 left-0 right-0 bg-blue-400 py-3 text-center leading-loose text-white transition-all duration-500`}
         onClick={scrollToBottom}

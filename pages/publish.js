@@ -1,6 +1,7 @@
-import { getDatabase, ref, set, push } from 'firebase/database';
-import { useCallback, useState, useEffect } from 'react';
+import { getDatabase, push, ref, set } from 'firebase/database';
 import { initFirebase } from '../lib/firebaseHelper.js';
+import { useCallback, useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
 
 function InputBox() {
   const [name, setName] = useState('');
@@ -31,10 +32,6 @@ function InputBox() {
 
   useEffect(() => {
     const savedName = localStorage.getItem('name');
-    console.log(
-      '🚀 ~ file: publish.js ~ line 32 ~ writePostData ~ savedName',
-      savedName
-    );
     if (savedName) {
       setName(savedName);
     }
@@ -100,6 +97,7 @@ function InputBox() {
 export default function Publish() {
   return (
     <div className="container mx-auto">
+      <NavBar />
       <InputBox />
     </div>
   );
