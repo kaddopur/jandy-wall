@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 function InputBox() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [alert, setAlert] = useState('');
+  const [alert, setAlert] = useState('發送成功，謝謝您的參與');
   const [alertClass, setAlertClass] = useState('opacity-0');
 
   const writePostData = useCallback((name, message) => {
@@ -95,7 +95,7 @@ function InputBox() {
           width={300}
           height={300}
           alt="jandy logo with names"
-          className="relative -top-6"
+          className="opacity-60"
         />
       </div>
     </form>
@@ -103,7 +103,7 @@ function InputBox() {
 }
 export default function Publish() {
   return (
-    <div className="container mx-auto max-h-screen bg-slate-100">
+    <div className="container mx-auto">
       <NavBar />
       <InputBox />
     </div>
