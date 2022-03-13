@@ -1,4 +1,10 @@
-import { getDatabase, onValue, ref } from 'firebase/database';
+import {
+  getDatabase,
+  limitToLast,
+  onValue,
+  query,
+  ref,
+} from 'firebase/database';
 import { initFirebase } from '../lib/firebaseHelper.js';
 import { useCallback, useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
@@ -7,6 +13,7 @@ import stringToIconClassName from '../lib/stringToIconClassName';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [firstTime, setFirstTime] = useState(true);
   const [newPostClass, setNewPostClass] = useState('opacity-0');
 
   const scrollToBottom = useCallback((isSmooth = true) => {
@@ -22,7 +29,7 @@ export default function Home() {
     initFirebase();
 
     const db = getDatabase();
-    const postListRef = ref(db, 'posts');
+    const postListRef = query(ref(db, 'posts'), limitToLast(256));
     onValue(
       postListRef,
       (snapshot) => {
