@@ -37,13 +37,12 @@ export default function Home() {
         });
 
         setPosts(newPosts);
-        scrollToBottom(false);
       },
       {
         onlyOnce: false,
       }
     );
-  }, [scrollToBottom]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -69,7 +68,7 @@ export default function Home() {
     <div className="container mx-auto">
       <NavBar />
       <button
-        className={`${newPostClass} fixed bottom-0 left-0 right-0 bg-blue-400 py-3 text-center leading-loose text-white transition-all duration-500`}
+        className={`${newPostClass} fixed bottom-0 left-0 right-0 z-40 bg-blue-400 py-3 text-center leading-loose text-white transition-all duration-500`}
         onClick={scrollToBottom}
       >
         新訊息
