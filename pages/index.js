@@ -86,7 +86,10 @@ function Posts({ posts }) {
       {posts.map((post) => {
         const { key, name, message, createdAt } = post;
         return (
-          <li key={key} className="flex flex-col bg-slate-100 p-6">
+          <li
+            key={key}
+            className="relative flex flex-col overflow-hidden bg-slate-100 p-6"
+          >
             <div className="break-all text-3xl">{message}</div>
             <div className="mt-2 flex items-center">
               <div
@@ -101,6 +104,13 @@ function Posts({ posts }) {
               <div className="text-sm text-slate-500">
                 {timeAgo.format(createdAt)}
               </div>
+              <img
+                src="/logo.png"
+                width={132}
+                height={132}
+                alt="jandy logo"
+                className="absolute right-0 top-0 opacity-10"
+              />
             </div>
           </li>
         );
