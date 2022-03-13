@@ -47,7 +47,7 @@ function InputBox() {
 
   return (
     <form
-      className="my-6 flex flex-col px-6"
+      className="flex flex-col p-6"
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -84,19 +84,26 @@ function InputBox() {
         value="送出"
         className="mt-2 h-12 bg-purple-500 text-lg text-white"
       />
-      {alert && (
-        <div
-          className={`${alertClass} mt-4 rounded-md text-center text-lg leading-loose text-white transition-all duration-500`}
-        >
-          {alert}
-        </div>
-      )}
+      <div
+        className={`${alertClass} mt-4 rounded-md text-center text-lg leading-loose text-white transition-all duration-500`}
+      >
+        {alert}
+      </div>
+      <div className="flex justify-center">
+        <img
+          src="/logo_names.png"
+          width={300}
+          height={300}
+          alt="jandy logo with names"
+          className="relative -top-6"
+        />
+      </div>
     </form>
   );
 }
 export default function Publish() {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-h-screen bg-slate-100">
       <NavBar />
       <InputBox />
     </div>
