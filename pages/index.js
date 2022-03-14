@@ -7,13 +7,12 @@ import {
 } from 'firebase/database';
 import { initFirebase } from '../lib/firebaseHelper.js';
 import { useCallback, useEffect, useState } from 'react';
+import Avvvatars from 'avvvatars-react';
 import NavBar from '../components/NavBar';
 import TimeAgo from 'javascript-time-ago';
-import stringToIconClassName from '../lib/stringToIconClassName';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  const [firstTime, setFirstTime] = useState(true);
   const [newPostClass, setNewPostClass] = useState('opacity-0');
 
   const scrollToBottom = useCallback((isSmooth = true) => {
@@ -98,13 +97,13 @@ function Posts({ posts }) {
           >
             <div className="break-all text-3xl">{message}</div>
             <div className="mt-2 flex items-center">
-              <div
-                className={`${stringToIconClassName(
-                  name
-                )} flex h-10 w-10 items-center justify-center rounded-2xl text-xl`}
-              >
-                {name?.[0]}
-              </div>
+              <Avvvatars
+                value={name}
+                size={40}
+                border
+                borderSize={1}
+                borderColor="#ccc"
+              />
               <div className="ml-2 text-slate-800">{name}</div>
               <div className="mx-2 text-slate-500">-</div>
               <div className="text-sm text-slate-500">
