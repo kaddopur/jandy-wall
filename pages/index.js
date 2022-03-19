@@ -8,6 +8,7 @@ import {
 import { initFirebase } from '../lib/firebaseHelper.js';
 import { useCallback, useEffect, useState } from 'react';
 import Avvvatars from 'avvvatars-react';
+import Head from 'next/head';
 import NavBar from '../components/NavBar';
 import TimeAgo from 'javascript-time-ago';
 
@@ -79,6 +80,9 @@ export default function Home() {
 
   return (
     <div className="container mx-auto">
+      <Head>
+        <title>留言牆 - J&amp;Y</title>
+      </Head>
       <NavBar />
       <button
         className={`${newPostClass} fixed bottom-0 left-0 right-0 z-40 bg-blue-400 py-3 text-center leading-loose text-white transition-all duration-500`}

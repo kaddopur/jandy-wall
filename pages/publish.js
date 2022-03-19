@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar';
 function InputBox() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [alert, setAlert] = useState('發送成功，謝謝您的參與');
+  const [alert, setAlert] = useState('發送成功，謝謝您的祝福');
   const [alertClass, setAlertClass] = useState('opacity-0');
 
   const writePostData = useCallback((name, message) => {
@@ -21,7 +21,7 @@ function InputBox() {
     })
       .then(() => {
         setAlertClass('opacity-1 bg-green-500');
-        setAlert('發送成功，謝謝您的參與');
+        setAlert('發送成功，謝謝您的祝福');
         setMessage('');
       })
       .catch((error) => {
@@ -104,6 +104,7 @@ function InputBox() {
 export default function Publish() {
   return (
     <div className="container mx-auto">
+      <title>留下祝福 - J&amp;Y</title>
       <NavBar />
       <InputBox />
     </div>
