@@ -10,12 +10,17 @@ function MyLink({ href, children }) {
     setIsActive(href === router.asPath);
   }, [href, router.asPath]);
 
-  const className = cx('border-b-4 py-3 text-center text-slate-900 text-lg', {
-    'border-b-purple-500': isActive,
-    'border-b-transparent': !isActive,
-  });
+  const className = cx(
+    'border-b-4 py-3 text-center text-slate-900 text-lg select-none',
+    {
+      'border-b-purple-500': isActive,
+      'border-b-transparent': !isActive,
+    }
+  );
 
-  return (
+  return isActive ? (
+    <span className={className}>{children}</span>
+  ) : (
     <a className={className} href={href}>
       {children}
     </a>
@@ -27,8 +32,8 @@ function NavBar() {
 
   return (
     <div className="sticky top-0 z-50 grid grid-cols-2 bg-white px-6 text-white shadow-md">
-      <MyLink href="/#">訊息牆</MyLink>
-      <MyLink href="/publish#">發佈</MyLink>
+      <MyLink href="/">訊息牆</MyLink>
+      <MyLink href="/publish">發佈</MyLink>
     </div>
   );
 }

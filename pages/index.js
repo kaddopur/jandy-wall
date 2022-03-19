@@ -108,8 +108,8 @@ function Posts({ posts }) {
                 value={name}
                 size={40}
                 border
-                borderSize={1}
-                borderColor="#ccc"
+                bordersize={1}
+                bordercolor="#ccc"
               />
               <div className="ml-2 text-slate-800">{name}</div>
               <div className="mx-2 text-slate-500">-</div>
