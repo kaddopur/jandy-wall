@@ -13,6 +13,7 @@ import TimeAgo from 'javascript-time-ago';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [firstTime, setFirstTime] = useState(true);
   const [newPostClass, setNewPostClass] = useState('opacity-0');
 
   const scrollToBottom = useCallback((isSmooth = true) => {
@@ -51,9 +52,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (firstTime && posts.length > 0) {
+      setFirstTime(false);
+      scrollToBottom(false);
+      return;
+    }
+
     if (
       window.scrollY + window.innerHeight <
-      document.body.scrollHeight - window.innerHeight / 2
+      document.body.scrollHeight - window.innerHeight
     ) {
       // skip auto scroll to the bottom if user scroll back half screen
       setNewPostClass('opacity-1');
