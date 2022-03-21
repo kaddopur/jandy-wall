@@ -90,13 +90,13 @@ function InputBox() {
         {alert}
       </div>
       <div className="flex justify-center">
-        {/* <img
+        <img
           src="/logo_names.png"
           width={300}
           height={300}
           alt="jandy logo with names"
           className="opacity-60"
-        /> */}
+        />
       </div>
     </form>
   );
